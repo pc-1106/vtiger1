@@ -1,4 +1,4 @@
-package POMRepo;
+package pomRepo;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,22 +9,34 @@ public class LoginPage {
 	WebDriver driver;
 
 	@FindBy(name = "user_name")
-	WebElement username_text_field;
+	private WebElement usernameTextField;
 
 	@FindBy(name = "user_password")
-	WebElement password_text_field;
+	private WebElement passwordTextField;
 
 	@FindBy(id = "submitButton")
-	WebElement login_button;
+	private WebElement loginButton;
 
-	LoginPage(WebDriver driver) {
+	public WebElement getUsernameTextField() {
+		return usernameTextField;
+	}
+
+	public WebElement getPasswordTextField() {
+		return passwordTextField;
+	}
+
+	public WebElement getLoginButton() {
+		return loginButton;
+	}
+
+	public LoginPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
 	public void loginAction(String username, String password) {
-		username_text_field.sendKeys(username);
-		password_text_field.sendKeys(password);
-		login_button.click();
+		usernameTextField.sendKeys(username);
+		passwordTextField.sendKeys(password);
+		loginButton.click();
 	}
 }
