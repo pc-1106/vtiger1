@@ -28,8 +28,29 @@ public class HomePage {
 	@FindBy(xpath = "//img[@src='themes/softed/images/user.PNG']")
 	private WebElement administratorIcon;
 
+	@FindBy(linkText = "Organizations")
+	private WebElement organizationsModule;
+
+	@FindBy(linkText = "Opportunities")
+	private WebElement opportunitiesModule;
+
+	@FindBy(linkText = "Campaigns")
+	private WebElement campaignsModule;
+
 	@FindBy(linkText = "Sign Out")
 	private WebElement signOutOption;
+
+	public WebElement getOrganizationsModule() {
+		return organizationsModule;
+	}
+
+	public WebElement getOpportunitiesModule() {
+		return opportunitiesModule;
+	}
+
+	public WebElement getCampaignsModule() {
+		return campaignsModule;
+	}
 
 	public WebElement getLeadsModule() {
 		return leadsModule;
@@ -58,6 +79,19 @@ public class HomePage {
 	public void clickOnQuotesModule() {
 		act.moveToElement(moreOption).perform();
 		act.click(quotesModule).perform();
+	}
+
+	public void clickOnOrganizationsModule() {
+		organizationsModule.click();
+	}
+
+	public void clickOnOpportunitiesModule() {
+		opportunitiesModule.click();
+	}
+
+	public void clickOnCampaignsModule() {
+		act.moveToElement(moreOption).perform();
+		act.click(campaignsModule).perform();
 	}
 
 	public void signOutAction() {

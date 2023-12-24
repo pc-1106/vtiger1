@@ -3,11 +3,14 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="leads_module.CreateLeadTest">
+      <class name="opportunities_module.CreateOpportunityTest">
         <methods>
-          <include name="createLeadAndVerifyInformationTest"/>
+          <include name="bmConfig"/>
+          <include name="bcConfig"/>
+          <include name="bsConfig"/>
+          <include name="createOpportunityAndVerifyTest"/>
         </methods>
-      </class> <!-- leads_module.CreateLeadTest -->
+      </class> <!-- opportunities_module.CreateOpportunityTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

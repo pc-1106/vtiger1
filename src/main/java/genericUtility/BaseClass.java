@@ -1,6 +1,9 @@
 package genericUtility;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,11 +16,22 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import com.mysql.cj.jdbc.Driver;
+
+import pomRepo.CampaignInformationPage;
+import pomRepo.CampaignsPage;
+import pomRepo.CreateNewCampaignPage;
 import pomRepo.CreateNewLeadPage;
+import pomRepo.CreateNewOpportunityPage;
+import pomRepo.CreateNewOrganizationPage;
 import pomRepo.HomePage;
 import pomRepo.LeadInformationPage;
 import pomRepo.LeadPage;
 import pomRepo.LoginPage;
+import pomRepo.OpportunitiesPage;
+import pomRepo.OpportunityInformationPage;
+import pomRepo.OrganizationInformationPage;
+import pomRepo.OrganizationsPage;
 
 public class BaseClass {
 	public FileUtility fUtils = new FileUtility();
@@ -29,9 +43,26 @@ public class BaseClass {
 	public CreateNewLeadPage createLead;
 	public LeadInformationPage leadInfo;
 	public LeadPage lead;
+	public OrganizationsPage org;
+	public CreateNewOrganizationPage createOrg;
+	public OrganizationInformationPage orgInfo;
+	public CampaignsPage campaign;
+	public CreateNewCampaignPage createCampaign;
+	public CampaignInformationPage campaignInfo;
+	public OpportunitiesPage oppPage;
+	public CreateNewOpportunityPage createOpportunity;
+	public OpportunityInformationPage opportunityInfo;
+	public Connection connection;
+	public DatabaseUtility dbUtils = new DatabaseUtility();
+
+	public static WebDriver sDriver;
 
 	@BeforeSuite
-	public void bsConfig() {
+	public void bsConfig() throws SQLException {
+		Driver driver = new Driver();
+		DriverManager.registerDriver(driver);
+		connection = DriverManager.getConnection(IPathConstant.DATABASE_URL, IPathConstant.DATABASE_USERNAME,
+				IPathConstant.DATABASE_PASSWORD);
 		System.out.println("Database connection established");
 	}
 
@@ -44,6 +75,7 @@ public class BaseClass {
 			driver = new FirefoxDriver();
 		else if (browser.equals(IPathConstant.EDGE_BROWSER_VALUE))
 			driver = new EdgeDriver();
+		sDriver = driver;
 		System.out.println(browser + " browser is launched");
 
 		wUtils.implicitWait(driver, IPathConstant.IMPLICIT_WAIT_SECONDS);
@@ -67,7 +99,7 @@ public class BaseClass {
 
 	@AfterMethod
 	public void amConfig() {
-		leadInfo.clickOnHomePageIcon();
+		hp = new HomePage(driver);
 		hp.signOutAction();
 		System.out.println("the user has logged out");
 	}
@@ -79,7 +111,8 @@ public class BaseClass {
 	}
 
 	@AfterSuite
-	public void asConfig() {
+	public void asConfig() throws SQLException {
+		connection.close();
 		System.out.println("Database connection closed");
 	}
 }
